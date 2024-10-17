@@ -1,3 +1,4 @@
+// Compilar com opção para OpenMP para medida do tempo de execução
 #include <stdio.h>
 #include <omp.h>
 #include <math.h>
