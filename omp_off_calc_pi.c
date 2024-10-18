@@ -10,19 +10,15 @@ int main() {
 
   begin = omp_get_wtime();
 
-  #pragma omp target data map(tofrom: pi) map(to:num_steps, step)// Diretiva para offloading para a GPU
-  {
-    #pragma omp target teams distribute parallel for reduction(+:pi) // Paralelização com OpenMP
-    for (long int i = 0; i < num_steps; i++) {
-      double x = (i + 0.5) * step;
-      pi += 4.0 / (double) (1.0 + x * x); 
-    }
-  }
+  #pragma omp target data map(tofrom: pi) map(to:num_steps, step) device(1)// Diretiva para offloading para a GPU
+  #pragma omp target teams distribute parallel for reduction(+:pi) // Paralelização com OpenMP
+     for (long int i = 0; i < num_steps; i++) {
+          double x = (i + 0.5) * step;
+          pi += 4.0 / (double) (1.0 + x * x); 
+     }
   pi *= step;
   end = omp_get_wtime();
-
-  printf("Valor de Pi calculado: %3.15f\n", pi);
-  printf("Tempo de execução: %3.15f segundos\n", end - begin);
-
+  printf("Valor de Pi calculado: %2.15f\n", pi);
+  printf("Tempo de execução: %f segundos\n", end - begin);
   return 0;
 }
