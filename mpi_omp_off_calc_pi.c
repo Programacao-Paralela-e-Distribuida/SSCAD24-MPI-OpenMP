@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
   step = 1.0 / (double)num_steps;
   start_time = omp_get_wtime(); // Tempo de início da execução
 // Offloading com OpenMP para o acelerador (GPU), com paralelismo dentro do processo
-#pragma omp target teams distribute parallel for default(none) reduction(+ : sum) map(tofrom : sum) map(to:size, num_steps, rank) private(x) device(0)
+#pragma omp target data map(tofrom:sum) map(to:size, num_steps, rank, step) device(1)
+#pragma omp target teams distribute parallel for reduction(+:sum) 
   for (i = rank; i < num_steps; i += size) { // Saltos de acordo com o número de processos
     x = (i + 0.5) * step;
     sum += 4.0 / (1.0 + x * x);
