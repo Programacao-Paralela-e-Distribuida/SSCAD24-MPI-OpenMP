@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
   if (rank == 0) {
     pi = step * global_sum; // Só o processo 0 calcula o valor final de Pi
     run_time = MPI_Wtime() - start_time;
-    printf("pi = %3.15f, %ld passos, computados em %lf segundos\n", pi, num_steps, run_time);
+    printf("pi = %2.15f, %ld passos, computados em %lf segundos\n", pi, num_steps, run_time);
   }  
 MPI_Finalize(); // Finaliza o MPI
   return 0;
