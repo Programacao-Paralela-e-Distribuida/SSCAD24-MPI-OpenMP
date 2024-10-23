@@ -5,5 +5,5 @@
 int main() {
   int numdevices = omp_get_num_devices();
   int device= omp_get_device_num();
-  printf("number of devices= %d *** device= %d\n", numdevices, device);
+  printf("Número de dispositivos = %d *** Dispositivo = %d\n", numdevices, device);
 }
